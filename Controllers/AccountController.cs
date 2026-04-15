@@ -18,7 +18,7 @@ public class AccountController(ApplicationDbContext context) : Controller
         ViewData["ReturnUrl"] = returnUrl;
         return View();
     }
-
+       
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Login(string email, string password, string? returnUrl = null)

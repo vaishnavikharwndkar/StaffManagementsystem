@@ -1,0 +1,65 @@
+@model IEnumerable<StaffTaskManagement.Models.TaskItem>
+@using StaffTaskManagement.Models
+@{
+    ViewData["Title"] = "My Tasks";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="mb-0">My Tasks</h3>
+    <a asp-action="MyPerformance" class="btn btn-outline-primary btn-sm">View My Performance</a>
+</div>
+
+<p class="text-muted">
+    This page shows all tasks currently assigned to you. Update statuses as you work and open
+    a task to discuss details with your manager using comments.
+</p>
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>Title</th>
+                <th>Created By</th>
+                <th>Department</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Due Date</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="7" class="text-center text-muted py-4">
+                    No tasks assigned to you yet. When an admin or manager creates a task and selects you in <strong>Assign To</strong>, it will appear here.
+                    You can also open <a asp-controller="Tasks" asp-action="Index">All my tasks (filtered)</a> from the main Tasks menu.
+                </td>
+            </tr>
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.CreatedBy?.FullName</td>
+                <td>@item.Department?.Name ?? "-"</td>
+                <td>
+                    <span class="badge bg-@(item.Priority switch { TaskPriority.Low => "success", TaskPriority.Medium => "primary", TaskPriority.High => "warning text-dark", TaskPriority.Critical => "danger", _ => "secondary" })">
+                        @item.Priority
+                    </span>
+                </td>
+                <td>
+                    <span class="badge bg-@(item.Status == StaffTaskManagement.Models.TaskStatus.Completed ? "success" : item.Status == StaffTaskManagement.Models.TaskStatus.InProgress ? "primary" : item.Status == StaffTaskManagement.Models.TaskStatus.OnHold ? "warning text-dark" : item.Status == StaffTaskManagement.Models.TaskStatus.Cancelled ? "secondary" : "info")">
+                        @item.Status
+                    </span>
+                </td>
+                <td>@item.DueDate?.ToLocalTime().ToString("dd MMM yyyy")</td>
+                <td class="text-end">
+                    <a asp-controller="Tasks" asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Open</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+

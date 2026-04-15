@@ -1,0 +1,64 @@
+@model StaffTaskManagement.Models.ManagerDashboardViewModel
+@{
+    ViewData["Title"] = "Manager Dashboard";
+}
+
+<h3>Manager Dashboard</h3>
+
+<p class="text-muted">
+    Welcome, @Model.ManagerName. This view summarizes your team and department workload.
+    Use <strong>Team Tasks</strong> to drill into individual assignments.
+    <a asp-action="TeamTasks" class="btn btn-sm btn-outline-primary ms-2">View Team Tasks</a>
+</p>
+
+<div class="row g-3 mt-2">
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <div class="text-muted text-uppercase small">Department</div>
+                <div class="h4 mb-0">@Model.DepartmentName  "Not assigned"</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <div class="text-muted text-uppercase small">Team Members</div>
+                <div class="display-6">@Model.TeamMembers</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <div class="text-muted text-uppercase small">Department Tasks</div>
+                <div class="display-6">@Model.DepartmentTasks</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <div class="text-muted text-uppercase small">Open Tasks</div>
+                <div class="display-6">@Model.OpenTeamTasks</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mt-3">
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <div class="text-muted text-uppercase small">Completed Tasks</div>
+                <div class="display-6">@Model.CompletedTeamTasks</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="alert alert-info shadow-sm mb-0">
+            <strong>Tip:</strong> Use the <em>Tasks</em> and <em>Reports</em> menus for more detailed tracking of project and team performance.
+        </div>
+    </div>
+</div>
+

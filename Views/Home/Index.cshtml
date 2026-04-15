@@ -1,0 +1,152 @@
+@model StaffTaskManagement.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+@if (Model.IsAdminOverview)
+{
+    @* <div class="alert alert-light border mb-3"> *@
+        @* <strong>Admin overview.</strong> You are signed in as an administrator. User and department counts below are for the whole organization. Use <a asp-controller="Admin" asp-action="Users">Admin → Users</a> to verify data in SQL Server. *@
+    @* </div> *@
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 bg-secondary text-white">
+                <div class="card-body">
+                    <div class="text-uppercase small fw-semibold">All users</div>
+                    <div class="display-6">@Model.TotalUsers</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 bg-info text-white">
+                <div class="card-body">
+                    <div class="text-uppercase small fw-semibold">Departments</div>
+                    <div class="display-6">@Model.TotalDepartments</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 bg-primary text-white">
+                <div class="card-body">
+                    <div class="text-uppercase small fw-semibold">All tasks</div>
+                    <div class="display-6">@Model.TotalTasks</div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (Model.IsAdminOverview)
+{
+    <div class="alert alert-light border mb-3">
+        @* <strong>Admin overview</strong> — You are viewing organization-wide task totals and your own assignment counts below. *@
+        @* <a asp-controller="Admin" asp-action="Users" class="ms-2">Manage users</a> · *@
+        @* <a asp-controller="Tasks" asp-action="Create">Create task</a> *@
+    </div>
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 bg-secondary text-white">
+                <div class="card-body">
+                    <div class="text-uppercase small fw-semibold">Users in database</div>
+                    <div class="display-6">@Model.TotalUsers</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 bg-info text-white">
+                <div class="card-body">
+                    <div class="text-uppercase small fw-semibold">Departments</div>
+                    <div class="display-6">@Model.TotalDepartments</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 bg-dark text-white">
+                <div class="card-body">
+                    <div class="text-uppercase small fw-semibold">All tasks (system)</div>
+                    <div class="display-6">@Model.TotalTasks</div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row g-3 mt-2">
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0 bg-primary text-white">
+            <div class="card-body">
+                <div class="text-uppercase small fw-semibold">My Tasks</div>
+                <div class="display-6">@Model.MyTasks</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0 bg-warning text-dark">
+            <div class="card-body">
+                <div class="text-uppercase small fw-semibold">Pending</div>
+                <div class="display-6">@Model.PendingTasks</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0 bg-success text-white">
+            <div class="card-body">
+                <div class="text-uppercase small fw-semibold">Completed</div>
+                <div class="display-6">@Model.CompletedTasks</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0 bg-danger text-white">
+            <div class="card-body">
+                <div class="text-uppercase small fw-semibold">Due Soon (3 days)</div>
+                <div class="display-6">@Model.DueSoonTasks</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Task Overview</h5>
+                <a asp-controller="Tasks" asp-action="Index" class="btn btn-sm btn-outline-primary">View All Tasks</a>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-2">
+                    This dashboard gives you a quick snapshot of your workload and progress.
+                </p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Total tasks in system</span>
+                        <span class="fw-semibold">@Model.TotalTasks</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Tasks assigned to you</span>
+                        <span class="fw-semibold">@Model.MyTasks</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Pending tasks</span>
+                        <span class="fw-semibold">@Model.PendingTasks</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Completed tasks</span>
+                        <span class="fw-semibold">@Model.CompletedTasks</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 mt-3 mt-lg-0">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-header bg-white border-0">
+                <h5 class="mb-0">Notifications</h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">Recent system alerts and task updates will appear here.</p>
+                <a asp-controller="Notifications" asp-action="Index" class="btn btn-outline-secondary btn-sm">Go to notifications</a>
+            </div>
+        </div>
+    </div>
+</div>

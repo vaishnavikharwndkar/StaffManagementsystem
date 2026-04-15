@@ -1,0 +1,11 @@
+﻿@model StaffTaskManagement.Models.ApplicationUser
+
+<h2>User Details</h2>
+
+<p><b>Name:</b> @Model.FullName</p>
+<p><b>Email:</b> @Model.Email</p>
+<p><b>Role:</b> @Model.Role</p>
+<p><b>Department:</b> @Model.Department?.Name</p>
+<p><b>Status:</b> @(Model.IsActive ? "Active" : "Inactive")</p>
+
+<a asp-action="Users">Back</a>

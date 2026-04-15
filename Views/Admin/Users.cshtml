@@ -1,0 +1,61 @@
+@model IEnumerable<StaffTaskManagement.Models.ApplicationUser>
+@{
+    ViewData["Title"] = "Users";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <h3 class="mb-0">Users</h3>
+    <div class="btn-group">
+        <a asp-action="CreateEmployee" class="btn btn-primary">Add Employee</a> 
+        @* <a asp-action="CreateUser" class="btn btn-outline-primary">Add User</a> *@
+    </div>
+</div>
+
+@* <p class="text-muted small">This list is loaded from SQL Server (<code>Users</code> table). If it is empty, sign in as admin and add users, or confirm the app uses the same server as in <code>appsettings.json</code>.</p> *@
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Department</th>
+                <th>Status</th>
+                <th>Actions</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="5" class="text-center text-muted py-4">No users yet. Use <strong>Add Employee</strong> or <strong>Add User</strong> above.</td>
+            </tr>
+        }
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.FullName</td>
+                <td>@user.Email</td>
+                <td>@user.Role</td>
+                <td>@user.Department?.Name ?? "-"</td>
+                <td>
+                    <span class="badge bg-@(user.IsActive ? "success" : "secondary")">
+                        @(user.IsActive ? "Active" : "Inactive")
+                    </span> 
+                </td>
+                    <td>
+                       <div class="d-flex gap-2">
+                 <a asp-controller="Admin" asp-action="Details" class="btn btn-outline-secondary btn-sm" asp-route-id="@user.Id">Details</a>
+                <a asp-controller="Admin" asp-action="Edit" class="btn btn-outline-success btn-sm" asp-route-id="@user.Id">Edit</a>
+               <a asp-controller="Admin" asp-action="Delete" class="btn btn-outline-danger btn-sm" asp-route-id="@user.Id">Delete</a>
+                       </div>
+                    </td> 
+                
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+

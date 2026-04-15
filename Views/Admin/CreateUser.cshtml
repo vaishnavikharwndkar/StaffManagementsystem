@@ -1,0 +1,48 @@
+@model StaffTaskManagement.Models.CreateUserViewModel
+@using StaffTaskManagement.Models
+@{
+    ViewData["Title"] = ViewData["Title"] as string ?? "Create User";
+}
+
+<h3>@ViewData["Title"]</h3>
+<hr />
+
+<form asp-action="CreateUser" method="post">
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="FullName" class="form-label"></label>
+            <input asp-for="FullName" class="form-control" />
+            <span asp-validation-for="FullName" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label asp-for="Password" class="form-label"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Role" class="form-label"></label>
+            <select asp-for="Role" class="form-select" asp-items="Html.GetEnumSelectList<UserRole>()"></select>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="DepartmentId" class="form-label">Department</label>
+            <select asp-for="DepartmentId" class="form-select" asp-items="ViewBag.Departments">
+                <option value="">-- Select Department --</option>
+            </select>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Users" class="btn btn-outline-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

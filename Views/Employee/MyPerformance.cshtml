@@ -1,0 +1,51 @@
+@model StaffTaskManagement.Models.EmployeeDashboardViewModel
+@{
+    ViewData["Title"] = "My Performance";
+}
+
+<h3>My Performance</h3>
+
+<p class="text-muted">
+    Overview of your assigned tasks and completion status. Use this to understand your workload
+    and how many tasks are overdue or pending.
+</p>
+
+<div class="row g-3 mt-2">
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <div class="text-muted text-uppercase small">My Tasks</div>
+                <div class="display-6">@Model.MyTasks</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <div class="text-muted text-uppercase small">Pending</div>
+                <div class="display-6">@Model.PendingTasks</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <div class="text-muted text-uppercase small">Completed</div>
+                <div class="display-6">@Model.CompletedTasks</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <div class="text-muted text-uppercase small">Overdue</div>
+                <div class="display-6">@Model.OverdueTasks</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-action="MyTasks" class="btn btn-outline-primary">Back to My Tasks</a>
+</div>
+

@@ -1,0 +1,84 @@
+@model IEnumerable<StaffTaskManagement.Models.TaskItem>
+@using StaffTaskManagement.Models
+@{
+    ViewData["Title"] = "Tasks";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="mb-0">Tasks</h3>
+    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+    {
+        <a asp-action="Create" class="btn btn-primary">Create Task</a>
+    }
+</div>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-3">
+        <select name="status" class="form-select">
+            <option value="">All Statuses</option>
+            @foreach (StaffTaskManagement.Models.TaskStatus status in Enum.GetValues(typeof(StaffTaskManagement.Models.TaskStatus)))
+            {
+                <option value="@status" selected="@(ViewBag.Status != null && (StaffTaskManagement.Models.TaskStatus)ViewBag.Status == status)">
+                    @status
+                </option>
+            }
+        </select>
+    </div>
+    <div class="col-md-3">
+        <select name="priority" class="form-select">
+            <option value="">All Priorities</option>
+            @foreach (TaskPriority priority in Enum.GetValues(typeof(TaskPriority)))
+            {
+                <option value="@priority" selected="@(ViewBag.Priority != null && (TaskPriority)ViewBag.Priority == priority)">
+                    @priority
+                </option>
+            }
+        </select>
+    </div>
+    <div class="col-md-3">
+        <button type="submit" class="btn btn-outline-secondary w-100">Apply Filters</button>
+    </div>
+</form>
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>Title</th>
+                <th>Assigned To</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Due Date</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.AssignedTo?.FullName ?? "-"</td>
+                <td>
+                    <span class="badge bg-@(item.Priority switch { TaskPriority.Low => "success", TaskPriority.Medium => "primary", TaskPriority.High => "warning text-dark", TaskPriority.Critical => "danger", _ => "secondary" })">
+                        @item.Priority
+                    </span>
+                </td>
+                <td>
+                    <span class="badge bg-@(item.Status == StaffTaskManagement.Models.TaskStatus.Completed ? "success" : item.Status == StaffTaskManagement.Models.TaskStatus.InProgress ? "primary" : item.Status == StaffTaskManagement.Models.TaskStatus.OnHold ? "warning text-dark" : item.Status == StaffTaskManagement.Models.TaskStatus.Cancelled ? "secondary" : "info")">
+                        @item.Status
+                    </span>
+                </td>
+                <td>@item.DueDate?.ToLocalTime().ToString("dd MMM yyyy")</td>
+                <td class="text-end">
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">View</a>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+

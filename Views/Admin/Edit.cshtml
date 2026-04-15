@@ -1,0 +1,56 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model StaffTaskManagement.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<h2>Edit User</h2>
+
+<form asp-action="Edit" method="post">
+
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label>Full Name</label>
+        <input asp-for="FullName" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Email</label>
+        <input asp-for="Email" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Role</label>
+        <select asp-for="Role" class="form-control">
+            <option value="Admin">Admin</option>
+            <option value="Manager">Manager</option>
+            <option value="Employee">Employee</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label>Department</label>
+        <select asp-for="DepartmentId" asp-items="ViewBag.Departments" class="form-control">
+            <option value="">-- Select Department --</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label>Status</label>
+         <select asp-for="IsActive" class="form-control"> 
+            <option value="true">Active</option> 
+            <option value="false">Inactive</option> 
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Update</button>
+
+    @* <a asp-action="Users" class="btn btn-success">Update</a> *@
+    <a asp-action="Users" class="btn btn-secondary">Cancel</a>
+
+</form>

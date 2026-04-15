@@ -1,0 +1,62 @@
+@{
+    ViewData["Title"] = "Reports & Analytics";
+}
+
+<h3>Reports & Analytics</h3>
+
+<div class="row g-3 mt-2">
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <div class="text-muted text-uppercase small">Total Tasks</div>
+                <div class="display-6">@ViewBag.TotalTasks</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-lg-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white border-0">
+                <h5 class="mb-0">Tasks by Status</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="statusChart" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white border-0">
+                <h5 class="mb-0">Tasks by Priority</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="priorityChart" height="100"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const statusCtx = document.getElementById('statusChart').getContext('2d');
+        new Chart(statusCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Completed', 'In Progress', 'On Hold', 'Not Started'],
+                datasets: [{
+                    data: [@ViewBag.Completed, @ViewBag.InProgress, @ViewBag.OnHold, @ViewBag.NotStarted],
+                    backgroundColor: ['#198754', '#0d6efd', '#ffc107', '#6c757d']
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+    </script>
+}
+

@@ -1,0 +1,59 @@
+@model StaffTaskManagement.Models.TaskItem
+@using StaffTaskManagement.Models
+@{
+    ViewData["Title"] = "Edit Task";
+}
+
+<h3>Edit Task</h3>
+<hr />
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <label asp-for="Title" class="form-label"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Priority" class="form-label"></label>
+            <select asp-for="Priority" class="form-select" asp-items="Html.GetEnumSelectList<TaskPriority>()"></select>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label asp-for="AssignedToId" class="form-label">Assign To</label>
+            <select asp-for="AssignedToId" class="form-select" asp-items="ViewBag.Users">
+                <option value="">-- Select Employee --</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="DepartmentId" class="form-label">Department</label>
+            <select asp-for="DepartmentId" class="form-select" asp-items="ViewBag.Departments">
+                <option value="">-- Select Department --</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="DueDate" class="form-label"></label>
+            <input asp-for="DueDate" type="datetime-local" class="form-control" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label asp-for="Status" class="form-label"></label>
+            <select asp-for="Status" class="form-select" asp-items="Html.GetEnumSelectList<StaffTaskManagement.Models.TaskStatus>()"></select>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
